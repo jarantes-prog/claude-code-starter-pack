@@ -1,0 +1,655 @@
+<title>Começando com Claude Code — guia de instalação</title>
+
+<style>
+  /* ---------------------------------------------------------------- tokens */
+  :root {
+    --paper:      #fbfbf8;
+    --paper-2:    #f3f4ef;
+    --ink:        #12313b;
+    --ink-soft:   #5a7079;
+    --rule:       #dde0d9;
+    --moss:       #2f6b4f;
+    --moss-soft:  #e6efe9;
+    --sand:       #f1e8d4;
+    --sand-line:  #d9c89e;
+    --clay:       #a8482a;
+    --clay-soft:  #f7e8e1;
+    --term-bg:    #10262e;
+    --term-fg:    #d3e2de;
+    --term-dim:   #6f8b8b;
+    --term-green: #82c9a3;
+    --term-blue:  #85b6ca;
+    --shadow:     0 1px 2px rgba(18,49,59,.06), 0 8px 24px -12px rgba(18,49,59,.18);
+
+    --display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --body:    "Avenir Next", Avenir, "Segoe UI", system-ui, -apple-system, sans-serif;
+    --mono:    "SF Mono", Menlo, Monaco, ui-monospace, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:      #0e1f26;
+      --paper-2:    #142b33;
+      --ink:        #e4ece9;
+      --ink-soft:   #95abb0;
+      --rule:       #22394048;
+      --moss:       #74c69a;
+      --moss-soft:  #15302a;
+      --sand:       #2b2418;
+      --sand-line:  #5c4c2c;
+      --clay:       #e59273;
+      --clay-soft:  #33201a;
+      --term-bg:    #081a21;
+      --shadow:     0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #fbfbf8; --paper-2: #f3f4ef; --ink: #12313b; --ink-soft: #5a7079;
+    --rule: #dde0d9; --moss: #2f6b4f; --moss-soft: #e6efe9; --sand: #f1e8d4;
+    --sand-line: #d9c89e; --clay: #a8482a; --clay-soft: #f7e8e1; --term-bg: #10262e;
+    --shadow: 0 1px 2px rgba(18,49,59,.06), 0 8px 24px -12px rgba(18,49,59,.18);
+  }
+  :root[data-theme="dark"] {
+    --paper: #0e1f26; --paper-2: #142b33; --ink: #e4ece9; --ink-soft: #95abb0;
+    --rule: #22394048; --moss: #74c69a; --moss-soft: #15302a; --sand: #2b2418;
+    --sand-line: #5c4c2c; --clay: #e59273; --clay-soft: #33201a; --term-bg: #081a21;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+
+  /* ------------------------------------------------------------------ base */
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 45rem; margin-inline: auto; padding: 2rem 1.5rem 5rem; }
+  p { margin: 0; }
+  strong { font-weight: 600; }
+  a { color: var(--moss); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--moss); outline-offset: 3px; border-radius: 2px; }
+
+  /* -------------------------------------------------------------- masthead */
+  .masthead { display: flex; flex-direction: column; gap: .9rem; padding-bottom: 2rem;
+              border-bottom: 1px solid var(--rule); }
+  .eyebrow { font-size: .74rem; letter-spacing: .14em; text-transform: uppercase;
+             color: var(--ink-soft); font-weight: 600; }
+  h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2rem, 6vw, 2.85rem);
+       line-height: 1.1; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+  .standfirst { font-size: 1.08rem; color: var(--ink-soft); max-width: 34rem; text-wrap: pretty; }
+  .meta { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; font-size: .85rem;
+          color: var(--ink-soft); margin-top: .25rem; }
+  .meta span { display: inline-flex; align-items: center; gap: .4rem; }
+  .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--moss); flex: none; }
+
+  /* ---------------------------------------------------------- lang toggle */
+  .langbar { display: flex; justify-content: flex-end; gap: .3rem; margin-bottom: 1.25rem; }
+  .langbar button {
+    font: inherit; font-size: .78rem; font-weight: 600; letter-spacing: .06em;
+    text-transform: uppercase; padding: .35rem .7rem; cursor: pointer;
+    background: transparent; color: var(--ink-soft);
+    border: 1px solid var(--rule); border-radius: 3px;
+  }
+  .langbar button[aria-pressed="true"] { background: var(--ink); color: var(--paper);
+                                         border-color: var(--ink); }
+
+  :root[data-lang="pt"] [data-l="en"] { display: none; }
+  :root[data-lang="en"] [data-l="pt"] { display: none; }
+
+  /* ------------------------------------------------------------ the gate */
+  .gate { display: grid; gap: .5rem; margin: 2rem 0; padding: 1.15rem 1.3rem;
+          background: var(--clay-soft); border-left: 3px solid var(--clay); border-radius: 3px; }
+  .gate .label { font-size: .74rem; letter-spacing: .12em; text-transform: uppercase;
+                 font-weight: 700; color: var(--clay); }
+  .gate p { font-size: .97rem; }
+
+  /* ------------------------------------------------------------- the spine */
+  .steps { display: grid; gap: 0; margin-top: 2.5rem; }
+  .step { display: grid; grid-template-columns: 2.6rem 1fr; gap: 0 1.3rem;
+          padding-bottom: 2.4rem; }
+  .spine { position: relative; }
+  .num { font-family: var(--mono); font-size: .82rem; font-weight: 600; color: var(--moss);
+         background: var(--moss-soft); border-radius: 50%; width: 2.1rem; height: 2.1rem;
+         display: grid; place-items: center; position: relative; z-index: 1; }
+  .spine::after { content: ""; position: absolute; left: 1.05rem; top: 2.1rem; bottom: -2.4rem;
+                  width: 1px; background: var(--rule); }
+  .step:last-child .spine::after { display: none; }
+  .body { display: grid; gap: .85rem; align-content: start; padding-top: .1rem; min-width: 0; }
+  h2 { font-family: var(--display); font-weight: 400; font-size: 1.5rem; line-height: 1.25;
+       margin: 0; text-wrap: balance; letter-spacing: -.005em; padding-top: .15rem; }
+  .body p { color: var(--ink); }
+  .aside { font-size: .92rem; color: var(--ink-soft); }
+
+  /* ------------------------------------------------------------- keycaps */
+  kbd { font-family: var(--body); font-size: .82em; font-weight: 600; padding: .15em .45em;
+        border: 1px solid var(--rule); border-bottom-width: 2px; border-radius: 4px;
+        background: var(--paper-2); color: var(--ink); white-space: nowrap; }
+
+  /* ------------------------------------------------------------- terminal */
+  .term { background: var(--term-bg); border-radius: 5px; overflow: hidden;
+          box-shadow: var(--shadow); }
+  .term-bar { display: flex; align-items: center; gap: .45rem; padding: .55rem .8rem;
+              border-bottom: 1px solid rgba(255,255,255,.07); }
+  .term-bar i { width: 10px; height: 10px; border-radius: 50%; background: #3f5a62; flex: none; }
+  .term-bar span { font-family: var(--body); font-size: .72rem; color: var(--term-dim);
+                   margin-left: .35rem; letter-spacing: .04em; }
+  .term pre { margin: 0; padding: .9rem 1rem 1.1rem; overflow-x: auto;
+              font-family: var(--mono); font-size: .8rem; line-height: 1.75; color: var(--term-fg); }
+  .term .p  { color: var(--term-blue); }
+  .term .g  { color: var(--term-green); }
+  .term .d  { color: var(--term-dim); }
+  .term .b  { color: var(--term-fg); font-weight: 600; }
+
+  /* --------------------------------------------------------- command card */
+  .cmd { display: grid; gap: .6rem; padding: 1rem; background: var(--paper-2);
+         border: 1px solid var(--rule); border-radius: 5px; }
+  .cmd-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .cmd-head .label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+                     font-weight: 700; color: var(--ink-soft); }
+  .cmd code { display: block; font-family: var(--mono); font-size: .78rem; line-height: 1.7;
+              word-break: break-all; color: var(--ink); }
+  .copy { font: inherit; font-family: var(--body); font-size: .78rem; font-weight: 600;
+          padding: .3rem .7rem; cursor: pointer; background: var(--ink); color: var(--paper);
+          border: none; border-radius: 3px; flex: none; }
+  .copy[data-done="1"] { background: var(--moss); }
+
+  /* ------------------------------------------------------------ callouts */
+  .note { display: grid; gap: .3rem; padding: .9rem 1.1rem; background: var(--sand);
+          border-left: 3px solid var(--sand-line); border-radius: 3px; font-size: .95rem; }
+  .note .label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+                 font-weight: 700; color: var(--ink-soft); }
+
+  .win { display: flex; gap: .7rem; align-items: flex-start; padding: .9rem 1.1rem;
+         background: var(--moss-soft); border-radius: 3px; font-size: .95rem; }
+  .win b { color: var(--moss); font-family: var(--mono); flex: none; }
+
+  /* --------------------------------------------------------------- table */
+  .tablewrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+  th, td { text-align: left; padding: .5rem .8rem .5rem 0; border-bottom: 1px solid var(--rule);
+           vertical-align: top; }
+  th { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft);
+       font-weight: 700; }
+
+  /* -------------------------------------------------------------- closing */
+  .closing { margin-top: 1rem; padding-top: 2rem; border-top: 1px solid var(--rule);
+             display: grid; gap: 1.1rem; }
+  .closing h3 { font-family: var(--display); font-weight: 400; font-size: 1.3rem; margin: 0; }
+  .trick { padding: 1.1rem 1.3rem; background: var(--ink); color: var(--paper);
+           border-radius: 5px; display: grid; gap: .45rem; }
+  .trick .label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+                  font-weight: 700; opacity: .6; }
+  .trick p { font-size: 1.02rem; }
+  .trick em { font-family: var(--display); font-style: italic; font-size: 1.12rem; }
+  footer { margin-top: 2.5rem; font-size: .82rem; color: var(--ink-soft); text-wrap: pretty; }
+
+  @media (max-width: 34rem) {
+    body { font-size: 16px; }
+    .step { grid-template-columns: 2rem 1fr; gap: 0 .9rem; }
+    .num { width: 1.8rem; height: 1.8rem; font-size: .75rem; }
+    .spine::after { left: .9rem; top: 1.8rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  /* ---------------------------------------------------------------- print */
+  @media print {
+    @page { margin: 16mm; }
+    body { background: #fff; color: #12313b; font-size: 10.5pt; }
+    .langbar, .copy { display: none; }
+    .wrap { max-width: none; padding: 0; }
+    .step { break-inside: avoid; page-break-inside: avoid; }
+    .term, .trick { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .term { box-shadow: none; }
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="langbar">
+    <button type="button" id="btn-pt" aria-pressed="true">Português</button>
+    <button type="button" id="btn-en" aria-pressed="false">English</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ PORTUGUÊS -->
+  <div data-l="pt">
+
+    <header class="masthead">
+      <div class="eyebrow">Guia de instalação · macOS</div>
+      <h1>Começando com Claude&nbsp;Code</h1>
+      <p class="standfirst">Um guia para quem nunca abriu um terminal na vida. Você vai
+        abrir o Terminal exatamente uma vez — e nunca mais.</p>
+      <div class="meta">
+        <span><i class="dot"></i>≈ 5 minutos</span>
+        <span><i class="dot"></i>6 passos</span>
+        <span><i class="dot"></i>Não dá pra quebrar nada</span>
+      </div>
+    </header>
+
+    <div class="gate">
+      <div class="label">Leia antes de tudo</div>
+      <p>O Claude Code <strong>não funciona no plano gratuito</strong>. Você precisa de uma
+        assinatura <strong>Claude Pro</strong> (~US$&nbsp;20/mês) ou <strong>Max</strong>.
+        Assine em <a href="https://claude.ai/upgrade">claude.ai/upgrade</a> antes de continuar
+        — sem isso, nenhum dos passos abaixo vai funcionar.</p>
+    </div>
+
+    <div class="steps">
+
+      <section class="step">
+        <div class="spine"><div class="num">1</div></div>
+        <div class="body">
+          <h2>Abra o Terminal</h2>
+          <p>Aperte <kbd>⌘ Cmd</kbd> + <kbd>Espaço</kbd>, digite <strong>Terminal</strong>,
+            aperte <kbd>Enter</kbd>.</p>
+          <p class="aside">Vai abrir uma janela com texto e um cursor piscando. Ela parece
+            intimidadora e não é. É só uma caixa onde você cola uma frase e aperta Enter —
+            como a barra de busca do Google, só que mais feia.</p>
+        </div>
+      </section>
+
+      <section class="step">
+        <div class="spine"><div class="num">2</div></div>
+        <div class="body">
+          <h2>Cole esta linha e aperte Enter</h2>
+          <div class="cmd">
+            <div class="cmd-head">
+              <span class="label">Copie exatamente isto</span>
+              <button type="button" class="copy" data-cmd="pt">Copiar</button>
+            </div>
+            <code id="cmd-pt">curl -fsSL https://raw.githubusercontent.com/jarantes-prog/claude-comeco/main/setup.sh | bash</code>
+          </div>
+          <p>Cole com <kbd>⌘ Cmd</kbd> + <kbd>V</kbd> e aperte <kbd>Enter</kbd>.</p>
+          <div class="note">
+            <div class="label">Se algo der errado</div>
+            <p>Cole a mesma linha de novo. O script foi feito pra ser repetido: ele nunca apaga
+              nada, pula o que já está pronto e continua de onde parou.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="step">
+        <div class="spine"><div class="num">3</div></div>
+        <div class="body">
+          <h2>Isto é o que você vai ver</h2>
+          <p>Nada de misterioso — o script conta cada coisa que faz, em português:</p>
+          <div class="term">
+            <div class="term-bar"><i></i><i></i><i></i><span>Terminal</span></div>
+<pre><span class="d">$</span> curl -fsSL https://raw.githubusercontent.com/…/setup.sh | bash
+
+<span class="b">Preparando seu Claude Code</span>
+<span class="d">Isso leva uns 5 minutos. Você só precisa fazer isso uma vez.</span>
+
+<span class="p">▸ Verificando seu Mac</span>
+  <span class="g">✓</span> macOS compatível (26.5.2)
+  <span class="g">✓</span> Conexão com a internet OK
+
+<span class="p">▸ Instalando o Claude Code</span>
+  <span class="g">✓</span> Claude Code instalado (2.1.217)
+
+<span class="p">▸ Instalando os plugins</span>
+  <span class="g">✓</span> Plugin instalado: superpowers
+  <span class="g">✓</span> Plugin instalado: skill-creator
+
+<span class="p">▸ Ajustando as configurações</span>
+  <span class="g">✓</span> Configurações criadas
+
+<span class="p">▸ Criando seu vault</span>
+  <span class="g">✓</span> Vault criado em: ~/Documents/Meu-Vault
+
+<span class="p">▸ Baixando o aplicativo do Claude</span>
+  <span class="g">✓</span> Baixado. Vou abrir a janela de instalação.
+
+<span class="g">✓ Pronto!</span></pre>
+          </div>
+          <p class="aside">Cada <span style="color:var(--moss);font-family:var(--mono)">✓</span>
+            é uma coisa a menos pra você fazer na mão.</p>
+        </div>
+      </section>
+
+      <section class="step">
+        <div class="spine"><div class="num">4</div></div>
+        <div class="body">
+          <h2>Arraste o Claude para Aplicativos</h2>
+          <p>No fim, o script abre sozinho uma janela com o ícone do Claude e uma seta apontando
+            para a pasta <strong>Aplicativos</strong>. Arraste um pro outro.</p>
+          <p class="aside">É a instalação normal de qualquer app de Mac. Se a janela não abrir,
+            procure <strong>Claude.dmg</strong> na sua pasta de Downloads e clique duas vezes.</p>
+          <p><strong>Pode fechar o Terminal agora.</strong> Você não precisa mais dele.</p>
+        </div>
+      </section>
+
+      <section class="step">
+        <div class="spine"><div class="num">5</div></div>
+        <div class="body">
+          <h2>Abra o Claude e vá na aba <em>Code</em></h2>
+          <p>Faça login com a conta da sua assinatura. No topo da janela existem três abas —
+            <strong>Chat</strong>, <strong>Cowork</strong> e <strong>Code</strong>. Clique em
+            <strong>Code</strong>.</p>
+          <p>Depois abra a pasta <strong>Documents › Meu-Vault</strong>.</p>
+          <div class="note">
+            <div class="label">Por que escolher uma pasta</div>
+            <p>O Claude Code sempre trabalha <em>dentro de uma pasta</em>. Ele lê os arquivos
+              que estão ali e segue as regras escritas no <code>Welcome.md</code> daquela pasta.
+              Escolher a pasta é dizer “é aqui que a gente trabalha hoje”.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="step">
+        <div class="spine"><div class="num">6</div></div>
+        <div class="body">
+          <h2>Seu primeiro <em>ingest</em></h2>
+          <p>Esta é a parte que faz a ficha cair. Pegue um artigo que você
+            <strong>leu de verdade</strong> essa semana, arraste o arquivo para a pasta
+            <code>raw/</code> do vault, volte no Claude e escreva duas palavras:</p>
+          <div class="cmd">
+            <div class="cmd-head"><span class="label">Digite isto</span></div>
+            <code>ingest it</code>
+          </div>
+          <p>Agora assiste. Ele lê o arquivo inteiro, conversa com você sobre o que achou
+            importante, escreve um resumo citando as fontes, cria uma página separada pra cada
+            pessoa, empresa e conceito que apareceu, conecta tudo com links e atualiza o índice.</p>
+          <div class="win">
+            <b>→</b>
+            <div>Um artigo vira de 5 a 15 páginas conectadas. <strong>Isso é normal.</strong>
+              É esse acúmulo que faz o vault valer a pena.</div>
+          </div>
+          <p class="aside">Repare no que você <em>não</em> fez: não pediu “crie uma página sobre
+            X”. Você disse duas palavras, e as regras do <code>Welcome.md</code> fizeram o resto.</p>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="closing">
+      <h3>Quando travar</h3>
+      <div class="trick">
+        <div class="label">O truque que resolve 80% dos casos</div>
+        <p>Copie a mensagem de erro, cole no Claude e escreva:<br>
+          <em>“me explica esse erro em português e me diz exatamente o que fazer”.</em></p>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>Se aparecer</th><th>Faça isto</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>command not found: claude</code></td>
+                <td>Feche o Terminal (<kbd>⌘</kbd>+<kbd>Q</kbd>), abra de novo, cole a linha outra vez.</td></tr>
+            <tr><td><code>requires a Pro or Max account</code></td>
+                <td>Você está no plano gratuito. Assine em claude.ai/upgrade.</td></tr>
+            <tr><td>Ele pede permissão pra algo</td>
+                <td>Dentro do vault, pode deixar. Fora dele, pergunte <em>“por que você precisa disso?”</em></td></tr>
+            <tr><td>Ele escreveu algo errado</td>
+                <td>Fale com ele, ou edite o arquivo na mão. É só markdown, o vault é seu.</td></tr>
+            <tr><td>Ele apagou algo sem querer</td>
+                <td>Digite <code>/rewind</code> pra voltar a conversa e os arquivos.</td></tr>
+            <tr><td>Nada funciona</td>
+                <td>No Terminal, rode <code>claude doctor</code>. Depois manda print pro João.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="aside"><strong>Você não vai quebrar nada.</strong> O pior caso realista é uma
+        página de wiki escrita errado — e isso se conserta editando um arquivo de texto.
+        Pode experimentar à vontade.</p>
+    </div>
+
+    <footer>
+      Kit completo, código do script e guias em
+      <a href="https://github.com/jarantes-prog/claude-comeco">github.com/jarantes-prog/claude-comeco</a>.
+      Vault baseado na metodologia <strong>ICM</strong> (Interpretable Context Methodology),
+      de Jake Van Clief. MIT — pega, forka, manda pros seus amigos.
+    </footer>
+
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════ ENGLISH -->
+  <div data-l="en">
+
+    <header class="masthead">
+      <div class="eyebrow">Install guide · macOS</div>
+      <h1>Getting started with Claude&nbsp;Code</h1>
+      <p class="standfirst">A guide for people who have never opened a terminal. You'll open
+        the Terminal exactly once — and never again.</p>
+      <div class="meta">
+        <span><i class="dot"></i>≈ 5 minutes</span>
+        <span><i class="dot"></i>6 steps</span>
+        <span><i class="dot"></i>You can't break anything</span>
+      </div>
+    </header>
+
+    <div class="gate">
+      <div class="label">Read this first</div>
+      <p>Claude Code <strong>does not work on the free plan</strong>. You need a
+        <strong>Claude Pro</strong> (~$20/month) or <strong>Max</strong> subscription.
+        Subscribe at <a href="https://claude.ai/upgrade">claude.ai/upgrade</a> before continuing —
+        without it, none of the steps below will work.</p>
+    </div>
+
+    <div class="steps">
+
+      <section class="step">
+        <div class="spine"><div class="num">1</div></div>
+        <div class="body">
+          <h2>Open the Terminal</h2>
+          <p>Press <kbd>⌘ Cmd</kbd> + <kbd>Space</kbd>, type <strong>Terminal</strong>,
+            press <kbd>Enter</kbd>.</p>
+          <p class="aside">A window opens with text and a blinking cursor. It looks intimidating
+            and it isn't. It's just a box where you paste a line and press Enter — like a Google
+            search bar, only uglier.</p>
+        </div>
+      </section>
+
+      <section class="step">
+        <div class="spine"><div class="num">2</div></div>
+        <div class="body">
+          <h2>Paste this line and press Enter</h2>
+          <div class="cmd">
+            <div class="cmd-head">
+              <span class="label">Copy exactly this</span>
+              <button type="button" class="copy" data-cmd="en">Copy</button>
+            </div>
+            <code id="cmd-en">curl -fsSL https://raw.githubusercontent.com/jarantes-prog/claude-comeco/main/setup.sh | bash -s -- --lang en</code>
+          </div>
+          <p>Paste with <kbd>⌘ Cmd</kbd> + <kbd>V</kbd> and press <kbd>Enter</kbd>.</p>
+          <div class="note">
+            <div class="label">If something goes wrong</div>
+            <p>Paste the same line again. The script is built to be repeated: it never deletes
+              anything, skips whatever is already done, and picks up where it left off.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="step">
+        <div class="spine"><div class="num">3</div></div>
+        <div class="body">
+          <h2>This is what you'll see</h2>
+          <p>Nothing mysterious — the script narrates every single thing it does:</p>
+          <div class="term">
+            <div class="term-bar"><i></i><i></i><i></i><span>Terminal</span></div>
+<pre><span class="d">$</span> curl -fsSL https://raw.githubusercontent.com/…/setup.sh | bash -s -- --lang en
+
+<span class="b">Setting up your Claude Code</span>
+<span class="d">This takes about 5 minutes. You only ever do it once.</span>
+
+<span class="p">▸ Checking your Mac</span>
+  <span class="g">✓</span> macOS is compatible (26.5.2)
+  <span class="g">✓</span> Internet connection OK
+
+<span class="p">▸ Installing Claude Code</span>
+  <span class="g">✓</span> Claude Code installed (2.1.217)
+
+<span class="p">▸ Installing plugins</span>
+  <span class="g">✓</span> Plugin installed: superpowers
+  <span class="g">✓</span> Plugin installed: skill-creator
+
+<span class="p">▸ Applying settings</span>
+  <span class="g">✓</span> Settings created
+
+<span class="p">▸ Creating your vault</span>
+  <span class="g">✓</span> Vault created at: ~/Documents/My-Vault
+
+<span class="p">▸ Downloading the Claude app</span>
+  <span class="g">✓</span> Downloaded. Opening the installer window.
+
+<span class="g">✓ All done!</span></pre>
+          </div>
+          <p class="aside">Every <span style="color:var(--moss);font-family:var(--mono)">✓</span>
+            is one less thing for you to do by hand.</p>
+        </div>
+      </section>
+
+      <section class="step">
+        <div class="spine"><div class="num">4</div></div>
+        <div class="body">
+          <h2>Drag Claude into Applications</h2>
+          <p>At the end, the script opens a window on its own showing the Claude icon and an
+            arrow pointing at the <strong>Applications</strong> folder. Drag one onto the other.</p>
+          <p class="aside">It's the normal way any Mac app installs. If the window doesn't open,
+            look for <strong>Claude.dmg</strong> in your Downloads folder and double-click it.</p>
+          <p><strong>You can close the Terminal now.</strong> You don't need it anymore.</p>
+        </div>
+      </section>
+
+      <section class="step">
+        <div class="spine"><div class="num">5</div></div>
+        <div class="body">
+          <h2>Open Claude and go to the <em>Code</em> tab</h2>
+          <p>Log in with your subscription account. At the top of the window there are three
+            tabs — <strong>Chat</strong>, <strong>Cowork</strong>, and <strong>Code</strong>.
+            Click <strong>Code</strong>.</p>
+          <p>Then open the folder <strong>Documents › My-Vault</strong>.</p>
+          <div class="note">
+            <div class="label">Why you pick a folder</div>
+            <p>Claude Code always works <em>inside a folder</em>. It reads the files there and
+              follows the rules written in that folder's <code>Welcome.md</code>. Picking the
+              folder is how you say “this is where we're working today”.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="step">
+        <div class="spine"><div class="num">6</div></div>
+        <div class="body">
+          <h2>Your first <em>ingest</em></h2>
+          <p>This is the part where it clicks. Take an article you
+            <strong>actually read</strong> this week, drag the file into the vault's
+            <code>raw/</code> folder, go back to Claude, and type two words:</p>
+          <div class="cmd">
+            <div class="cmd-head"><span class="label">Type this</span></div>
+            <code>ingest it</code>
+          </div>
+          <p>Now watch. It reads the whole file, talks to you about what it found important,
+            writes a summary citing sources, creates a separate page for every person, company
+            and concept that came up, links it all together, and updates the index.</p>
+          <div class="win">
+            <b>→</b>
+            <div>One article becomes 5 to 15 linked pages. <strong>That's normal.</strong>
+              That compounding is what makes the vault worth having.</div>
+          </div>
+          <p class="aside">Notice what you <em>didn't</em> do: you never said “create a page
+            about X”. You said two words, and the rules in <code>Welcome.md</code> did the rest.</p>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="closing">
+      <h3>When you get stuck</h3>
+      <div class="trick">
+        <div class="label">The trick that solves 80% of cases</div>
+        <p>Copy the error message, paste it into Claude, and write:<br>
+          <em>“explain this error to me and tell me exactly what to do”.</em></p>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>If you see</th><th>Do this</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>command not found: claude</code></td>
+                <td>Quit the Terminal (<kbd>⌘</kbd>+<kbd>Q</kbd>), reopen it, paste the line again.</td></tr>
+            <tr><td><code>requires a Pro or Max account</code></td>
+                <td>You're on the free plan. Subscribe at claude.ai/upgrade.</td></tr>
+            <tr><td>It asks permission for something</td>
+                <td>Inside the vault, go ahead. Outside it, ask <em>“why do you need that?”</em></td></tr>
+            <tr><td>It wrote something wrong</td>
+                <td>Tell it, or edit the file by hand. It's just markdown — the vault is yours.</td></tr>
+            <tr><td>It deleted something by accident</td>
+                <td>Type <code>/rewind</code> to roll the conversation and files back.</td></tr>
+            <tr><td>Nothing works</td>
+                <td>In the Terminal, run <code>claude doctor</code>. Then send a screenshot.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="aside"><strong>You're not going to break anything.</strong> The realistic worst
+        case is a badly written wiki page — and that's fixed by editing a text file.
+        Go ahead and experiment.</p>
+    </div>
+
+    <footer>
+      Full kit, script source and guides at
+      <a href="https://github.com/jarantes-prog/claude-comeco">github.com/jarantes-prog/claude-comeco</a>.
+      Vault based on the <strong>ICM</strong> methodology (Interpretable Context Methodology)
+      by Jake Van Clief. MIT — take it, fork it, send it to your friends.
+    </footer>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btnPt = document.getElementById('btn-pt');
+    var btnEn = document.getElementById('btn-en');
+
+    function setLang(lang) {
+      root.setAttribute('data-lang', lang);
+      btnPt.setAttribute('aria-pressed', String(lang === 'pt'));
+      btnEn.setAttribute('aria-pressed', String(lang === 'en'));
+    }
+    btnPt.addEventListener('click', function () { setLang('pt'); });
+    btnEn.addEventListener('click', function () { setLang('en'); });
+
+    var nav = (navigator.language || 'pt').toLowerCase();
+    setLang(nav.indexOf('pt') === 0 ? 'pt' : (nav.indexOf('en') === 0 ? 'en' : 'pt'));
+
+    Array.prototype.forEach.call(document.querySelectorAll('.copy'), function (btn) {
+      btn.addEventListener('click', function () {
+        var lang = btn.getAttribute('data-cmd');
+        var text = document.getElementById('cmd-' + lang).textContent.trim();
+        var done = function () {
+          btn.setAttribute('data-done', '1');
+          btn.textContent = lang === 'pt' ? 'Copiado ✓' : 'Copied ✓';
+          setTimeout(function () {
+            btn.removeAttribute('data-done');
+            btn.textContent = lang === 'pt' ? 'Copiar' : 'Copy';
+          }, 2200);
+        };
+        var fallback = function () {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); done(); }
+          catch (e) { btn.textContent = lang === 'pt' ? 'Selecione e copie' : 'Select and copy'; }
+          document.body.removeChild(ta);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, fallback);
+        } else { fallback(); }
+      });
+    });
+  })();
+</script>
