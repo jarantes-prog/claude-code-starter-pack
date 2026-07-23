@@ -203,6 +203,11 @@
     .langbar, .copy { display: none; }
     .wrap { max-width: none; padding: 0; }
     .step { break-inside: avoid; page-break-inside: avoid; }
+    /* O comando precisa sair do PDF em UMA linha só. Se ele quebrar, copiar do
+       PDF traz um \n junto e a colagem falha silenciosamente no Terminal.
+       The command must come out of the PDF as ONE line. If it wraps, copying
+       from the PDF drags a newline along and the paste silently breaks. */
+    .cmd code { white-space: pre; word-break: normal; font-size: 7.2pt; line-height: 1.5; }
     .term, .trick { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .term { box-shadow: none; }
   }
@@ -622,8 +627,11 @@
     btnPt.addEventListener('click', function () { setLang('pt'); });
     btnEn.addEventListener('click', function () { setLang('en'); });
 
+    // ?lang=pt / ?lang=en força o idioma; senão segue o navegador, com PT por padrão.
+    // ?lang=pt / ?lang=en forces the language; otherwise follow the browser, PT by default.
+    var forced = (location.search.match(/[?&]lang=(pt|en)\b/) || [])[1];
     var nav = (navigator.language || 'pt').toLowerCase();
-    setLang(nav.indexOf('pt') === 0 ? 'pt' : (nav.indexOf('en') === 0 ? 'en' : 'pt'));
+    setLang(forced || (nav.indexOf('en') === 0 ? 'en' : 'pt'));
 
     Array.prototype.forEach.call(document.querySelectorAll('.copy'), function (btn) {
       btn.addEventListener('click', function () {
