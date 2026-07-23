@@ -81,12 +81,12 @@ if [ "$LANG_CHOICE" = "pt" ]; then
   T_OK_VAULT="Vault criado em:"
   T_SKIP_VAULT="Você já tinha um vault aqui — não mexi nele:"
   T_STEP_APP="Baixando o aplicativo do Claude"
-  T_OK_APP="Baixado. Vou abrir a janela de instalação."
+  T_OK_APP="Abri o download no seu navegador."
   T_SKIP_APP="O aplicativo Claude já está instalado"
-  T_WARN_APP="Não consegui baixar o app. Baixe manualmente em: claude.ai/download"
+  T_WARN_APP="Não consegui abrir o navegador. Baixe manualmente em: claude.ai/download"
   T_DONE="Pronto!"
   T_NEXT="O que fazer agora"
-  T_N1="Arraste o ícone do Claude para a pasta Aplicativos (a janela deve estar aberta)"
+  T_N1="No navegador, salve o Claude.dmg, abra ele, e arraste o Claude para Aplicativos"
   T_N2="Abra o Claude e faça login (precisa de uma assinatura Pro ou Max)"
   T_N3="Clique na aba Code, no topo"
   T_N4="Abra a pasta"
@@ -119,12 +119,12 @@ else
   T_OK_VAULT="Vault created at:"
   T_SKIP_VAULT="You already had a vault here — left it alone:"
   T_STEP_APP="Downloading the Claude app"
-  T_OK_APP="Downloaded. Opening the installer window."
+  T_OK_APP="Opened the download in your browser."
   T_SKIP_APP="The Claude app is already installed"
-  T_WARN_APP="Couldn't download the app. Get it manually at: claude.ai/download"
+  T_WARN_APP="Couldn't open the browser. Get it manually at: claude.ai/download"
   T_DONE="All done!"
   T_NEXT="What to do now"
-  T_N1="Drag the Claude icon into your Applications folder (the window should be open)"
+  T_N1="In your browser, save Claude.dmg, open it, and drag Claude into Applications"
   T_N2="Open Claude and log in (you need a Pro or Max subscription)"
   T_N3="Click the Code tab at the top"
   T_N4="Open the folder"
@@ -291,10 +291,16 @@ step "$T_STEP_APP"
 if [ -d "/Applications/Claude.app" ]; then
   skip "$T_SKIP_APP"
 else
-  DMG="$HOME/Downloads/Claude.dmg"
-  if curl -fsSL --max-time 300 -o "$DMG" "$DMG_URL" 2>/dev/null && [ -s "$DMG" ]; then
+  # Entregamos o download ao navegador em vez de baixar com curl. A URL do .dmg
+  # fica atrás de proteção anti-bot: o curl recebe uma página HTML de desafio
+  # (~5 KB) em vez do instalador, e como o arquivo não fica vazio, a checagem
+  # passaria e abriríamos um HTML disfarçado de .dmg. O navegador passa normal.
+  # We hand the download to the browser instead of fetching with curl. The .dmg
+  # URL sits behind bot protection: curl receives an HTML challenge page (~5 KB)
+  # instead of the installer, and since that file isn't empty the check would
+  # pass and we'd open an HTML file masquerading as a .dmg. The browser is fine.
+  if open "$DMG_URL" 2>/dev/null; then
     ok "$T_OK_APP"
-    open "$DMG" 2>/dev/null || true
   else
     warn "$T_WARN_APP"
   fi

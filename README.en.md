@@ -29,7 +29,7 @@ curl -fsSL https://raw.githubusercontent.com/jarantes-prog/claude-comeco/main/se
 
 3. Wait. The script tells you everything it's doing as it goes.
 
-When it finishes, it opens the app installer window and your vault folder. Then just follow the 5 steps printed on screen.
+When it finishes, it opens the app download in your browser and your vault folder. Then just follow the 5 steps printed on screen.
 
 > **Something failed?** Run the same line again. The script is built to be repeated — it never deletes anything and skips whatever is already done.
 
@@ -54,7 +54,7 @@ This project believes in **glass-box**: you have a right to know what ran on you
 | 3 | Installs 2 plugins: `superpowers` and `skill-creator` | Only two. Forty skills drown a beginner |
 | 4 | Creates a `settings.json` with basic protections | Stops the AI from reading your passwords and keys by accident |
 | 5 | Creates your vault at `~/Documents/My-Vault` | Your knowledge base |
-| 6 | Downloads the Claude app and opens the installer window | So you don't have to go hunting |
+| 6 | Opens the Claude app download in your browser | So you don't have to go hunting |
 
 **What it does NOT do:** delete files, ask for your admin password, install Homebrew or Node, or touch existing settings (it backs them up first).
 
