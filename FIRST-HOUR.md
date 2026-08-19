@@ -8,7 +8,7 @@ Don't skip exercise 2 — that's where it clicks.
 
 ## First: open the right tab
 
-Open the **Claude** app. At the top you'll see three tabs: **Chat**, **Cowork**, and **Code**.
+Open the **Claude** app. At the top of the window you'll see a few tabs.
 
 Click **Code**.
 

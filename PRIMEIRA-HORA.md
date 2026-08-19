@@ -8,7 +8,7 @@ Não pule o exercício 2 — é onde a ficha cai.
 
 ## Antes: abra a aba certa
 
-Abra o app **Claude**. No topo você vê três abas: **Chat**, **Cowork** e **Code**.
+Abra o app **Claude**. No topo da janela você vê algumas abas.
 
 Clique em **Code**.
 

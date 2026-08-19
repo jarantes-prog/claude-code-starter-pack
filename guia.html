@@ -333,9 +333,8 @@
         <div class="spine"><div class="num">5</div></div>
         <div class="body">
           <h2>Abra o Claude e vá na aba <em>Code</em></h2>
-          <p>Faça login com a conta da sua assinatura. No topo da janela existem três abas —
-            <strong>Chat</strong>, <strong>Cowork</strong> e <strong>Code</strong>. Clique em
-            <strong>Code</strong>.</p>
+          <p>Faça login com a conta da sua assinatura. No topo da janela existem algumas abas.
+            Clique na <strong>Code</strong>.</p>
           <p>Depois abra a pasta <strong>Documents › Meu-Vault</strong>.</p>
           <div class="note">
             <div class="label">Por que escolher uma pasta</div>
@@ -529,9 +528,8 @@
         <div class="spine"><div class="num">5</div></div>
         <div class="body">
           <h2>Open Claude and go to the <em>Code</em> tab</h2>
-          <p>Log in with your subscription account. At the top of the window there are three
-            tabs — <strong>Chat</strong>, <strong>Cowork</strong>, and <strong>Code</strong>.
-            Click <strong>Code</strong>.</p>
+          <p>Log in with your subscription account. At the top of the window there are a few
+            tabs. Click <strong>Code</strong>.</p>
           <p>Then open the folder <strong>Documents › My-Vault</strong>.</p>
           <div class="note">
             <div class="label">Why you pick a folder</div>
@@ -621,6 +619,7 @@
 
     function setLang(lang) {
       root.setAttribute('data-lang', lang);
+      root.setAttribute('lang', lang === 'en' ? 'en' : 'pt-BR');
       btnPt.setAttribute('aria-pressed', String(lang === 'pt'));
       btnEn.setAttribute('aria-pressed', String(lang === 'en'));
     }
