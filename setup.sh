@@ -93,6 +93,8 @@ if [ "$LANG_CHOICE" = "pt" ]; then
   T_N5="Leia o arquivo PRIMEIRA-HORA.md — ele te guia pelo resto"
   T_NOTERM="A partir daqui você não precisa mais do Terminal. Pode fechar."
   T_GUIDE="Guia completo:"
+  T_PLUGINS_MISSING1="Os plugins ainda não foram instalados (superpowers / skill-creator)."
+  T_PLUGINS_MISSING2="Depois de entrar no app e fazer login (passo 2 acima), cole esta MESMA linha no Terminal para terminar:"
 else
   T_TITLE="Setting up your Claude Code"
   T_SUB="This takes about 5 minutes. You only ever do it once."
@@ -131,6 +133,8 @@ else
   T_N5="Read FIRST-HOUR.md — it walks you through the rest"
   T_NOTERM="From here on you don't need the Terminal. You can close it."
   T_GUIDE="Full guide:"
+  T_PLUGINS_MISSING1="The plugins aren't installed yet (superpowers / skill-creator)."
+  T_PLUGINS_MISSING2="After you log into the app (step 2 above), paste this SAME line in the Terminal to finish:"
 fi
 
 if [ -z "$VAULT_DIR" ]; then
@@ -308,6 +312,16 @@ fi
 
 # ------------------------------------------------------------- 7. o final --
 
+# Confere os plugins uma última vez. Se não instalaram (falha passageira, ou a
+# pessoa ainda não estava logada), avisamos AQUI no fim, bem visível, com a linha
+# exata pra terminar — em vez de um aviso no meio que ela já rolou pra cima.
+# Re-check the plugins one last time; if missing, say so loudly here, with the fix.
+missing_plugins=""
+final_plugins="$(claude plugin list 2>/dev/null || true)"
+for plugin in superpowers skill-creator; do
+  printf '%s' "$final_plugins" | grep -q "$plugin" || missing_plugins="$missing_plugins $plugin"
+done
+
 printf '\n%s%s %s%s\n' "$BOLD$GREEN" "✓" "$T_DONE" "$RESET"
 printf '\n%s%s:%s\n' "$BOLD" "$T_NEXT" "$RESET"
 printf '  1. %s\n' "$T_N1"
@@ -315,7 +329,16 @@ printf '  2. %s\n' "$T_N2"
 printf '  3. %s\n' "$T_N3"
 printf '  4. %s %s\n' "$T_N4" "$VAULT_DIR"
 printf '  5. %s\n' "$T_N5"
-printf '\n%s%s%s\n' "$DIM" "$T_NOTERM" "$RESET"
+
+if [ -n "$missing_plugins" ]; then
+  recovery="curl -fsSL https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}/setup.sh | bash"
+  if [ "$LANG_CHOICE" = "en" ]; then recovery="$recovery -s -- --lang en"; fi
+  printf '\n%s⚠ %s%s\n' "$BOLD$YELLOW" "$T_PLUGINS_MISSING1" "$RESET"
+  printf '%s  %s%s\n' "$YELLOW" "$T_PLUGINS_MISSING2" "$RESET"
+  printf '\n    %s%s%s\n' "$BOLD" "$recovery" "$RESET"
+else
+  printf '\n%s%s%s\n' "$DIM" "$T_NOTERM" "$RESET"
+fi
 printf '%s%s https://github.com/%s/%s%s\n\n' "$DIM" "$T_GUIDE" "$REPO_OWNER" "$REPO_NAME" "$RESET"
 
 open "$VAULT_DIR" 2>/dev/null || true
