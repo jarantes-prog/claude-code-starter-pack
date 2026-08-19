@@ -239,7 +239,7 @@ claude plugin marketplace add "anthropics/claude-plugins-official" >/dev/null 2>
 installed_plugins="$(claude plugin list 2>/dev/null || true)"
 
 for plugin in superpowers skill-creator; do
-  if printf '%s' "$installed_plugins" | grep -q "$plugin"; then
+  if printf '%s' "$installed_plugins" | grep -qF "${plugin}@"; then
     skip "$T_SKIP_PLUGIN $plugin"
   elif claude plugin install "${plugin}@claude-plugins-official" --scope user >/dev/null 2>&1; then
     ok "$T_OK_PLUGIN $plugin"
@@ -319,7 +319,7 @@ fi
 missing_plugins=""
 final_plugins="$(claude plugin list 2>/dev/null || true)"
 for plugin in superpowers skill-creator; do
-  printf '%s' "$final_plugins" | grep -q "$plugin" || missing_plugins="$missing_plugins $plugin"
+  printf '%s' "$final_plugins" | grep -qF "${plugin}@" || missing_plugins="$missing_plugins $plugin"
 done
 
 printf '\n%s%s %s%s\n' "$BOLD$GREEN" "✓" "$T_DONE" "$RESET"

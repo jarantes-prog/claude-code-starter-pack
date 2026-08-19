@@ -1,0 +1,22 @@
+name: lint
+
+# Catches the kind of breakage that would otherwise only surface when a
+# beginner runs the one-liner on their Mac: a syntax error or a shell bug
+# slipped into setup.sh. Runs on every push and pull request.
+on: [push, pull_request]
+
+jobs:
+  shell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: bash syntax check (bash -n)
+        run: |
+          bash -n setup.sh
+          bash -n build-standalone.sh
+
+      # shellcheck ships preinstalled on the ubuntu runner.
+      # severity=warning = meaningful signal without style-nit noise.
+      - name: shellcheck
+        run: shellcheck --severity=warning setup.sh build-standalone.sh

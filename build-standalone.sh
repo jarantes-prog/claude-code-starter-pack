@@ -15,7 +15,7 @@
 # edit to guia.html so the two don't drift.
 
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")" || exit 1
 
 python3 - <<'PY'
 frag = open('guia.html', encoding='utf-8').read()
