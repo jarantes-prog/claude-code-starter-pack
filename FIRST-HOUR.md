@@ -117,3 +117,9 @@ Three habits that make all the difference:
 3. **Ask it to explain what it did.** "Why did you create that page?" — understanding its choices teaches you to steer better.
 
 And when you get stuck: [`WHEN-STUCK.md`](./WHEN-STUCK.md).
+
+---
+
+## Want more power? (optional)
+
+Once you're comfortable, you can use the same Claude Code inside **VS Code** — files beside the conversation, a real dev environment. See [Level 2](https://github.com/jarantes-prog/claude-code-starter-pack/blob/main/LEVEL-UP.md). No rush: the app already does everything you need to start.

@@ -90,6 +90,12 @@ Works for any subject: a market you track, a hobby, university research, clients
 
 ---
 
+## Want more power? (optional)
+
+Once you're comfortable in the app, you can use the same Claude Code inside **VS Code**. See [`LEVEL-UP.md`](./LEVEL-UP.md) — it's optional; the app keeps doing everything you need.
+
+---
+
 ## Stuck?
 
 Read [`WHEN-STUCK.md`](./WHEN-STUCK.md). And remember the single most useful trick:

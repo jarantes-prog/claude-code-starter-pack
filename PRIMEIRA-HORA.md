@@ -117,3 +117,9 @@ Três hábitos que fazem toda a diferença:
 3. **Peça pra ele explicar o que ele fez.** "por que você criou essa página?" — entender as escolhas dele te ensina a dirigir melhor.
 
 E quando travar: [`QUANDO-TRAVAR.md`](./QUANDO-TRAVAR.md).
+
+---
+
+## Quer mais poder? (opcional)
+
+Quando já estiver à vontade, dá pra usar o mesmo Claude Code dentro do **VS Code** — arquivos do lado da conversa, um ambiente de dev de verdade. Veja o [Nível 2](https://github.com/jarantes-prog/claude-code-starter-pack/blob/main/NIVEL-2.md). Sem pressa: o app já faz tudo que você precisa pra começar.

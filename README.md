@@ -90,6 +90,12 @@ Funciona pra qualquer assunto: um mercado que você acompanha, um hobby, pesquis
 
 ---
 
+## Quer mais poder? (opcional)
+
+Quando já estiver à vontade no app, dá pra usar o mesmo Claude Code dentro do **VS Code**. Veja o [`NIVEL-2.md`](./NIVEL-2.md) — é opcional, o app continua fazendo tudo que você precisa.
+
+---
+
 ## Travou?
 
 Leia o [`QUANDO-TRAVAR.md`](./QUANDO-TRAVAR.md). E lembra do truque mais útil de todos:
