@@ -100,6 +100,12 @@ Ele é bom nisso. Sério.
 
 ---
 
+## Mudou de ideia?
+
+Dá pra remover tudo em uns dois minutos, sem medo. Veja [`COMO-DESINSTALAR.md`](./COMO-DESINSTALAR.md) — seu vault (as suas anotações) fica intacto, a não ser que você peça pra apagar.
+
+---
+
 ## Créditos e licença
 
 - **ICM / "folders over agents"** — Jake Van Clief ([Clief Notes](https://www.skool.com/cliefnotes))

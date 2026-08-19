@@ -94,3 +94,9 @@ The script is built for this: it skips everything already done, never deletes an
 You're not going to break anything. The realistic worst case is a badly written wiki page, and that's fixed by editing a text file.
 
 Go ahead and experiment.
+
+---
+
+## Changed your mind and want it all gone?
+
+No problem — see [how to uninstall](https://github.com/jarantes-prog/claude-code-starter-pack/blob/main/HOW-TO-UNINSTALL.md). Your notes (the vault) only disappear if you say so.

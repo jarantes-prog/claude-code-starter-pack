@@ -100,6 +100,12 @@ It's good at this. Genuinely.
 
 ---
 
+## Changed your mind?
+
+You can remove everything in about two minutes, no stress. See [`HOW-TO-UNINSTALL.md`](./HOW-TO-UNINSTALL.md) — your vault (your notes) stays untouched unless you choose to delete it.
+
+---
+
 ## Credits and license
 
 - **ICM / "folders over agents"** — Jake Van Clief ([Clief Notes](https://www.skool.com/cliefnotes))

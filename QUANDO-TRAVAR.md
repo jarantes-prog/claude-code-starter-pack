@@ -94,3 +94,9 @@ O script foi feito pra isso: ele pula tudo que já está pronto, nunca apaga nad
 Você não vai quebrar nada. O pior caso realista é uma página de wiki escrita errado, e isso se conserta editando um arquivo de texto.
 
 Pode experimentar à vontade.
+
+---
+
+## Mudou de ideia e quer remover tudo?
+
+Sem problema — veja [como desinstalar](https://github.com/jarantes-prog/claude-code-starter-pack/blob/main/COMO-DESINSTALAR.md). Suas anotações (o vault) só somem se você mandar.
