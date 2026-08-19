@@ -15,8 +15,9 @@ jobs:
         run: |
           bash -n setup.sh
           bash -n build-standalone.sh
+          bash -n vscode.sh
 
       # shellcheck ships preinstalled on the ubuntu runner.
       # severity=warning = meaningful signal without style-nit noise.
       - name: shellcheck
-        run: shellcheck --severity=warning setup.sh build-standalone.sh
+        run: shellcheck --severity=warning setup.sh build-standalone.sh vscode.sh
