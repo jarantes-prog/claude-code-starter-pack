@@ -75,7 +75,7 @@ You've used your quota for the last 5 hours. It happens.
 **Fix:** run the same line again.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/jarantes-prog/claude-comeco/main/setup.sh | bash -s -- --lang en
+curl -fsSL https://raw.githubusercontent.com/jarantes-prog/claude-code-starter-pack/main/setup.sh | bash -s -- --lang en
 ```
 
 The script is built for this: it skips everything already done, never deletes anything, and picks up where it left off.

@@ -24,7 +24,7 @@ O Claude Code **não funciona no plano gratuito**. Você precisa do **Claude Pro
 2. Cole a linha abaixo e aperte `Enter`:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/jarantes-prog/claude-comeco/main/setup.sh | bash
+curl -fsSL https://raw.githubusercontent.com/jarantes-prog/claude-code-starter-pack/main/setup.sh | bash
 ```
 
 3. Espere. O script vai te contar tudo o que está fazendo, em português.

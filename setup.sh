@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# claude-comeco — setup para quem nunca usou um terminal.
-# claude-comeco — setup for people who have never used a terminal.
+# claude-code-starter-pack — setup para quem nunca usou um terminal.
+# claude-code-starter-pack — setup for people who have never used a terminal.
 #
-#   curl -fsSL https://raw.githubusercontent.com/jarantes-prog/claude-comeco/main/setup.sh | bash
-#   curl -fsSL https://raw.githubusercontent.com/jarantes-prog/claude-comeco/main/setup.sh | bash -s -- --lang en
+#   curl -fsSL https://raw.githubusercontent.com/jarantes-prog/claude-code-starter-pack/main/setup.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/jarantes-prog/claude-code-starter-pack/main/setup.sh | bash -s -- --lang en
 #
 # Este script pode ser rodado quantas vezes quiser. Ele nunca apaga nada.
 # This script is safe to run as many times as you like. It never deletes anything.
@@ -12,13 +12,13 @@
 set -euo pipefail
 
 REPO_OWNER="jarantes-prog"
-REPO_NAME="claude-comeco"
+REPO_NAME="claude-code-starter-pack"
 REPO_BRANCH="main"
 # As três URLs abaixo aceitam override por variável de ambiente — só para testes.
 # The three URLs below accept an env-var override — for testing only.
-DMG_URL="${CLAUDE_COMECO_DMG_URL:-https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect}"
-INSTALLER_URL="${CLAUDE_COMECO_INSTALLER_URL:-https://claude.ai/install.sh}"
-TARBALL_URL="${CLAUDE_COMECO_TARBALL_URL:-}"
+DMG_URL="${CLAUDE_STARTER_DMG_URL:-https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect}"
+INSTALLER_URL="${CLAUDE_STARTER_INSTALLER_URL:-https://claude.ai/install.sh}"
+TARBALL_URL="${CLAUDE_STARTER_TARBALL_URL:-}"
 MIN_MACOS_MAJOR=13
 
 LANG_CHOICE="pt"

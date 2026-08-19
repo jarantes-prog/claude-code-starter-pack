@@ -75,7 +75,7 @@ Você usou sua cota das últimas 5 horas. Acontece.
 **Solução:** rode a mesma linha de novo.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/jarantes-prog/claude-comeco/main/setup.sh | bash
+curl -fsSL https://raw.githubusercontent.com/jarantes-prog/claude-code-starter-pack/main/setup.sh | bash
 ```
 
 O script foi feito pra isso: ele pula tudo que já está pronto, nunca apaga nada, e continua de onde parou.
